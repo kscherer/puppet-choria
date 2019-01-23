@@ -37,11 +37,12 @@ class choria::repo (
       }
     }
   } elsif $facts["os"]["name"] == "Ubuntu" {
-    $release = 'xenial'
     if versioncmp($facts['os']['release']['major'], '16.04') < 0 {
       fail("Choria Repositories are only supported for xenial or newer releases")
     } elsif versioncmp($facts['os']['release']['major'], '17.10') > 0 {
       $release = 'bionic'
+    } else {
+      $release = 'xenial'
     }
     apt::source{"choria-release":
       ensure        => $ensure,
